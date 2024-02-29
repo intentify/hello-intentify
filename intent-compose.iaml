@@ -1,0 +1,3 @@
+intent-compose:
+  - intent: ./ethereum_to_polygon_rebalancing.iaml
+  - intent: ./polygon_to_ethereum_notification.iaml

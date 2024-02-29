@@ -1,0 +1,17 @@
+imports:
+  - weth: std/erc20
+    address: 0x7a2088a1bFc9d81c55368AE168C2C02570cB814F
+    expose:
+      - transfer:
+        amount: <= max_usdc_amount
+  - usdc: std/erc20
+    address: 0x4A679253410272dd5232B3Ff7cF5dbB88f295319
+
+params:
+  - max_usdc_amount:
+  - min_weth_balance:
+
+intent:
+  - user_balance: weth.balanceOf(this)
+  - if: user_balance >= min_weth_balance
+    return: true

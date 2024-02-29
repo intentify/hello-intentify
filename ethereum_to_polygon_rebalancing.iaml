@@ -1,0 +1,19 @@
+import:
+  - usdc: std/erc20
+    address: 0x4A679253410272dd5232B3Ff7cF5dbB88f295319
+    decimals: 18
+  - wormhole: std/wormhole
+    address: 0x1234567890123456789012345678901234567890
+
+params:
+  - polygon_account: 0xPolygonAccountAddress
+  - topic: "usdc_balance"
+
+intent:
+  - ethereum_usdc: usdc.balanceOf(this)
+  - polygon_usdc: wormhole.getMessage(polygon_account, topic)
+  - if: polygon_usdc < ethereum_usdc
+    then:
+      - amount: (ethereum_usdc - polygon_usdc) / 2
+      - wormhole.transfer(polygon_account, amount)
+      - return: true
